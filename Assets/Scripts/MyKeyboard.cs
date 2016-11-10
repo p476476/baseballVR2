@@ -4,37 +4,42 @@ using UnityEngine.UI;
 
 public class MyKeyboard : MonoBehaviour {
 
-	public MyKeyboard Inctance;
+	MyKeyboard Inctance;
 
 	public Text txt_input;
 
-	bool isCaps = true;
+	public bool isCaps = true;
 
-	void Awake(){
-		Inctance = this;
-	}
+    int name_max_length = 16;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
-	public void inputChar(char ch){
-		txt_input.text += ch;
+    //按鍵click時 呼叫此function
+	public void inputChar(string ch){
+
+        //轉大寫
+        if (isCaps)
+            ch = ch.ToUpper();
+
+        //限制名子長度
+        if(txt_input.text.Length<name_max_length)
+            txt_input.text += ch;
 	}
 
-	public void pressEnter()
+    //按Enter時 呼叫此function
+    public void pressEnter()
 	{
 		
 	}
 
-	public void pressCaps()
+    //按Caps時 呼叫此function
+    public void pressCaps()
 	{
 		isCaps = !isCaps;
-	}
+        EventManager.TriggerEvent("changeCase");
+    }
 }
