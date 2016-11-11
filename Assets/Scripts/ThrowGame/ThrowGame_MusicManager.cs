@@ -75,11 +75,11 @@ public class ThrowGame_MusicManager : MonoBehaviour {
 
     public IEnumerator StopMusic()
     {
-        print("stop music");
+        print("stoping music");
         isPlaying = false;
         keepVolumeDown = true;
         yield return new WaitForSeconds(1.0f);
-        print("stop music2");
+        print("music stopped");
         keepVolumeDown = false;
         audio.Stop();
 

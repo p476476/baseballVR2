@@ -5,7 +5,7 @@ public class ThrowGame_Ball : MonoBehaviour {
 
     //是否沒打到數字牌
     bool isMissBall = true;
-	bool isDroped = false;
+	public bool isDroped = false;
 
 	// Use this for initialization
 	void Start () {
@@ -52,8 +52,13 @@ public class ThrowGame_Ball : MonoBehaviour {
                 ThrowGame_NormalGame.Instance.missHit();
             }
 
-			if (!isDroped) {
-				ThrowGame_NormalGame.Instance.ballDropOnGround ();
+            //若還沒落地過
+            if (!isDroped &&
+                ThrowGameManager.Instance.mode == ThrowGameManager.Mode.NORMAL_MODE &&
+                ThrowGameManager.Instance.gameState == ThrowGameManager.StateType.PLAYING) {
+
+                print("isDroped");
+                ThrowGame_NormalGame.Instance.ballDropOnGround ();
 				isDroped = true;
 			}
 

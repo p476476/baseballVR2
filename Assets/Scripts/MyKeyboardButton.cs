@@ -32,4 +32,6 @@ public class MyKeyboardButton : MonoBehaviour {
         else
             txt.text = txt.text.ToUpper();
     }
+
+    
 }

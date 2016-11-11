@@ -19,15 +19,15 @@ public class Hand : MonoBehaviour {
 	//Rigidbody hand_rb;
 	public Transform hand_center;
 
-	float hand_power = 2f;
+	public float hand_power = 1.5f;
 	Vector3 hand_speed;
 	Vector3 old_pos;
 
     //手正在碰到的物體
     List<GameObject> colliders_list;
 
-    [SerializeField]
-	private UnityEvent useOneBall;
+    //
+    public bool canUseLightingBall = false;
 
 	//======================System Function========================//
 	void Start () {
@@ -100,7 +100,15 @@ public class Hand : MonoBehaviour {
             //產生球
             if (canGetBall())
             {
-                holded_obj = (GameObject)Instantiate(light_ball, hand_center.position, Quaternion.identity) as GameObject;
+                canUseLightingBall = true;
+                if (canUseLightingBall)
+                {
+                    holded_obj = (GameObject)Instantiate(light_ball, hand_center.position, Quaternion.identity) as GameObject;
+                    //EventManager.TriggerEvent("consume_energy");
+                    canUseLightingBall = false;
+                }
+                else
+                    holded_obj = (GameObject)Instantiate(Resources.Load("ball_test"), hand_center.position, Quaternion.identity) as GameObject;
 
                 //球的parent設為手 (跟著手移動)
                 holded_obj.transform.parent = this.transform;
@@ -164,6 +172,7 @@ public class Hand : MonoBehaviour {
         anim.SetBool("hold", false);
         if (is_holding_thing)
         {
+            EventManager.TriggerEvent("stopBiggerBall");
            
             holded_obj.transform.parent = null;
             Rigidbody ball_rb = holded_obj.gameObject.GetComponent<Rigidbody>();
@@ -197,4 +206,21 @@ public class Hand : MonoBehaviour {
             colliders_list.Remove(obj.gameObject);
         }
     }
+
+    //===============Unity Event===============//
+    void OnEnable()
+    {
+        EventManager.StartListening("energy", getEnergyBall);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("energy", getEnergyBall);
+    }
+
+    void getEnergyBall()
+    {
+        canUseLightingBall = true;
+    }
+
 }

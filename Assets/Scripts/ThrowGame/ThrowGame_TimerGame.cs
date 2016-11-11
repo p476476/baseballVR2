@@ -41,6 +41,9 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     //特效
     public ParticleSystem scoreStar;
 
+    //能量表
+    public ThrowGame_EnergyBar energyBar;
+
     /*====================system functions======================*/
 
     void Awake()
@@ -112,17 +115,22 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         for (int i = 1; i < 10; i++)
             num_timer[i] = 10;
 
-        
+
+        //清除所有數字牌子
+        number_ctlr.destoryAllNumber(0);
 
         //開啟文字顯示
         enableAllText();
         update_text();
 
         //分數為白色(因為倒數時會變紅 怕沒改回來)
-        txt_leftTime.color = Color.white;
+        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+
+        //開啟能量表
+        energyBar.gameObject.SetActive(true);
+        energyBar.init();
 
         //倒數
-
         ThrowGame_Message msg = message.GetComponent<ThrowGame_Message>();
         msg.show("READY");
         yield return new WaitForSeconds(1.6f);
@@ -156,6 +164,9 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         score += num.myNum;
         //combo_number++;
 
+        //加能量
+        energyBar.addEnergy((float)num.myNum);
+
         //1秒後刪除被打中的牌子
         number_ctlr.destoryNumber(num.myPos, 1.0f);
         //2秒後產生新牌子
@@ -164,24 +175,23 @@ public class ThrowGame_TimerGame : MonoBehaviour {
 
 	IEnumerator gameOver()
     {
-        //球
-        /*GameObject hand = GameObject.FindGameObjectWithTag("Hand");
-        if (hand != null)
-        {
-            hand.GetComponent<Hand>().unholdObject();
-        }*/
 
         message.GetComponent<ThrowGame_Message>().show("遊戲結束");
 		yield return new WaitForSeconds(1.5f);
 
 		number_ctlr.destoryAllNumber(0);
-		disableAllText ();
 
-		ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
+        //倒數文字變回白色
+        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+
+        disableAllText ();
+
+        //關閉能量表
+
+        energyBar.gameObject.SetActive(false);
+
+        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
 		this.gameObject.SetActive(false);
-        
-        
-        
     }
 
 
@@ -228,4 +238,6 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         else
             return false;
     }
+
+    //=================Unity Event=====================//
 }

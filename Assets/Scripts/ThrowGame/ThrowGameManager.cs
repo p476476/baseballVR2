@@ -186,4 +186,6 @@ public class ThrowGameManager : MonoBehaviour {
         btn_NormalMode.gameObject.SetActive(true);
 		btn_Start.setEnable(true);
     }
+
+    
 }
