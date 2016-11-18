@@ -11,6 +11,7 @@ public class MyKeyboard : MonoBehaviour {
 	public bool isCaps = true;
 
     int name_max_length = 16;
+    public bool isEnterPressed = false;
 
     void Awake()
     {
@@ -37,8 +38,9 @@ public class MyKeyboard : MonoBehaviour {
     //按Enter時 呼叫此function
     public void pressEnter()
 	{
-		
-	}
+        isEnterPressed = true;
+
+    }
 
     //按Caps時 呼叫此function
     public void pressCaps()
@@ -63,12 +65,17 @@ public class MyKeyboard : MonoBehaviour {
     public void enableKeyboard()
     {
         print("enableKeyboard");
-        this.gameObject.SetActive(true);
+        this.GetComponent<RectTransform>().position = new Vector3(0.54f, 0.94f, 1.22f);
     }
 
     public void disableKeyboard()
     {
         print("disableKeyboard");
-        this.gameObject.SetActive(false);
+        this.GetComponent<RectTransform>().position = new Vector3(-50.54f, 0.94f, 1.22f);
+    }
+
+    public bool finishInput()
+    {
+        return isEnterPressed;
     }
 }

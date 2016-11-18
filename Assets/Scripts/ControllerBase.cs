@@ -136,9 +136,9 @@ public class ControllerBase : MonoBehaviour {
 		}
 	}
 
-	public void Shock(){
+	public void Shock(ushort i){
 
-		controller.TriggerHapticPulse (3000);
+		controller.TriggerHapticPulse (i);
 
 
 	}

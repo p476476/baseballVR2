@@ -16,7 +16,7 @@ namespace Wacki {
             base.Initialize();
             Debug.Log("Initialize");
 
-            var trackedObject = GetComponent<SteamVR_TrackedObject>();
+            var trackedObject = GetComponentInParent<SteamVR_TrackedObject>();
 
             if(trackedObject != null) {
                 _index = (int)trackedObject.index;

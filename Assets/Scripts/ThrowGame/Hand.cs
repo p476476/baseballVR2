@@ -29,8 +29,14 @@ public class Hand : MonoBehaviour {
     //
     public bool canUseLightingBall = false;
 
-	//======================System Function========================//
-	void Start () {
+
+    //震動幅度 
+    ushort min_shock_value = 100;
+    ushort max_shock_value = 300;
+    ushort shock_value = 0;
+
+    //======================System Function========================//
+    void Start () {
 
         //得到ControllerBase
         ctrl = GetComponentInParent<ControllerBase> ();
@@ -71,14 +77,24 @@ public class Hand : MonoBehaviour {
             this.transform.Translate(transform.forward * -0.03f);
         }
 
+        if(anim.GetBool("hold")&&is_holding_thing == true)
+        {
+            ctrl.Shock(shock_value);
+
+            shock_value += (ushort)(100 * Time.deltaTime);
+            shock_value = (ushort)Mathf.Clamp(shock_value, min_shock_value, max_shock_value);
+        }
+            
+
         //按下版機時 手彎曲 獲得球
-		if (Input.GetKeyDown(KeyCode.U)||ctrl.TriggerButtonDown==true)
+        if (ctrl.TriggerButtonDown==true)
         {
             //撥放手彎曲的動畫
-            anim.Play(holding);
             anim.SetBool("hold", true);
 
             
+
+
             //找碰撞體中第一個按鈕
             foreach (var obj in colliders_list)
             {
@@ -101,6 +117,10 @@ public class Hand : MonoBehaviour {
             if (canGetBall())
             {
                 canUseLightingBall = true;
+
+                //震動初始化
+                shock_value = min_shock_value;
+
                 if (canUseLightingBall)
                 {
                     holded_obj = (GameObject)Instantiate(light_ball, hand_center.position, Quaternion.identity) as GameObject;
@@ -117,6 +137,8 @@ public class Hand : MonoBehaviour {
                 is_holding_thing = true;
             }
         }
+
+
         
 
         //放開版機時 手張開 若握著物體 則將物體丟出
@@ -157,6 +179,8 @@ public class Hand : MonoBehaviour {
                 break;
 
             case ThrowGameManager.StateType.PAUSE:
+                return false;
+            case ThrowGameManager.StateType.GAME_END:
                 return false;
 
             default:

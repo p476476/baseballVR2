@@ -105,7 +105,7 @@ public class ThrowGameManager : MonoBehaviour {
                 break;
 
 			case StateType.GAME_END:
-				endGame ();
+			
 	            break;
         }
 
@@ -135,9 +135,11 @@ public class ThrowGameManager : MonoBehaviour {
         }
     }
 
-	void endGame()
+	public void backToUnstart()
 	{
-		StartCoroutine(music_mgr.StopMusic());
+        //if(music_mgr.isPlaying())
+		    StartCoroutine(music_mgr.StopMusic());
+
 		enableAllButton();
 
 		if(mode==Mode.TIMER_MODE)

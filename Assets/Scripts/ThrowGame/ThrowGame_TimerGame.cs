@@ -94,8 +94,10 @@ public class ThrowGame_TimerGame : MonoBehaviour {
             update_text();
 
             //當遊戲時間結束
-            if(left_time<0)
-				StartCoroutine(gameOver());
+            if (left_time < 0)
+            {
+                StartCoroutine(gameOver());
+            }
         }
     }
 
@@ -175,7 +177,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
 
 	IEnumerator gameOver()
     {
-
+        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
         message.GetComponent<ThrowGame_Message>().show("遊戲結束");
 		yield return new WaitForSeconds(1.5f);
 
@@ -187,11 +189,21 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         disableAllText ();
 
         //關閉能量表
-
         energyBar.gameObject.SetActive(false);
 
-        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
-		this.gameObject.SetActive(false);
+        //開啟鍵盤
+        MyKeyboard.Instance.enableKeyboard();
+
+        //等到案ENTER
+        while(!MyKeyboard.Instance.finishInput())
+            yield return new WaitForSeconds(0.5f);
+
+        MyKeyboard.Instance.disableKeyboard();
+
+
+        ThrowGameManager.Instance.backToUnstart();
+
+        this.gameObject.SetActive(false);
     }
 
 

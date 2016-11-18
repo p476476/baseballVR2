@@ -199,9 +199,9 @@ public class ThrowGame_NormalGame : MonoBehaviour {
 	IEnumerator gameOver()
     {
 		print ("game OvER");
-
-		//移除障礙
-		obstacle.GetComponent<ThrowGame_Obstacle>().disableObstacle();
+        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
+        //移除障礙
+        obstacle.GetComponent<ThrowGame_Obstacle>().disableObstacle();
 
         message.GetComponent<ThrowGame_Message>().show("GAME OVER");
 		yield return new WaitForSeconds(1.5f);
@@ -209,9 +209,9 @@ public class ThrowGame_NormalGame : MonoBehaviour {
         disableAllText();
 
 
-
+        ThrowGameManager.Instance.backToUnstart();
         this.gameObject.SetActive(false);
-		ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
+		
         
     }
 
