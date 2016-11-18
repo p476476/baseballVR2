@@ -69,10 +69,15 @@ public class ThrowGameManager : MonoBehaviour {
 
         }
 
+
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            ThrowGame_NormalGame.Instance.gameObject.SetActive(false);
-            ThrowGame_TimerGame.Instance.gameObject.SetActive(false);
+            MyKeyboard.Instance.enableKeyboard();
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            MyKeyboard.Instance.disableKeyboard();
         }
 
         switch (gameState)

@@ -221,6 +221,7 @@ public class Hand : MonoBehaviour {
     void getEnergyBall()
     {
         canUseLightingBall = true;
+        
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MyKeyboard : MonoBehaviour {
 
-	MyKeyboard Inctance;
+	public static MyKeyboard Instance;
 
 	public Text txt_input;
 
@@ -12,6 +12,10 @@ public class MyKeyboard : MonoBehaviour {
 
     int name_max_length = 16;
 
+    void Awake()
+    {
+        Instance = this;
+    }
 
     // Update is called once per frame
     void Update () {
@@ -41,5 +45,30 @@ public class MyKeyboard : MonoBehaviour {
 	{
 		isCaps = !isCaps;
         EventManager.TriggerEvent("changeCase");
+    }
+    /*
+    //===============Unity Event===============//
+    void OnEnable()
+    {
+        EventManager.StartListening("enableKeyboard", enableKeyboard);
+        EventManager.StartListening("disableKeyboard", disableKeyboard);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("enableKeyboard", enableKeyboard);
+        EventManager.StopListening("disableKeyboard", disableKeyboard);
+    }*/
+
+    public void enableKeyboard()
+    {
+        print("enableKeyboard");
+        this.gameObject.SetActive(true);
+    }
+
+    public void disableKeyboard()
+    {
+        print("disableKeyboard");
+        this.gameObject.SetActive(false);
     }
 }
