@@ -77,7 +77,14 @@ public class ThrowGameManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            MyKeyboard.Instance.disableKeyboard();
+            Debug.Log("press U");
+            score_tuple score = new score_tuple();
+            score.score = 100;
+            score.name = "haha";
+            score.date = "2016";
+
+            ThrowGame_ScoreRecorder.Instance.addScore(score);
+          
         }
 
         switch (gameState)

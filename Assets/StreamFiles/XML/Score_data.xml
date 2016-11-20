@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="big5"?>
+<ScoreDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <scoreList>
+    <score_tuple>
+      <name>haha123</name>
+      <date>2016</date>
+      <score>1000</score>
+    </score_tuple>
+    <score_tuple>
+      <name>haha56</name>
+      <date>2016</date>
+      <score>500</score>
+    </score_tuple>
+    <score_tuple>
+      <name>haha1</name>
+      <date>2016</date>
+      <score>100</score>
+    </score_tuple>
+    <score_tuple>
+      <name>haha</name>
+      <date>2016</date>
+      <score>10</score>
+    </score_tuple>
+    <score_tuple>
+      <name>haha</name>
+      <date>2016</date>
+      <score>5</score>
+    </score_tuple>
+  </scoreList>
+</ScoreDatabase>
