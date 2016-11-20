@@ -16,9 +16,12 @@ public class score_tuple
 [System.Serializable]
 public class ScoreDatabase
 {
-    public List<score_tuple> scoreList = new List<score_tuple>();
-}
+    [XmlArray("TimerGameScore")]
+    public List<score_tuple> timerScoreList = new List<score_tuple>();
 
+    [XmlArray("NormalGameScore")]
+    public List<score_tuple> normalScoreList = new List<score_tuple>();
+}
 
 
 public class ThrowGame_ScoreRecorder : MonoBehaviour { 
@@ -27,6 +30,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
 
     public ScoreDatabase scoreDB;
     public TextMesh txt_score;
+    public TextMesh txt_name;
 
     void Awake()
     {
@@ -40,25 +44,19 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
 
     void Update()
     {
-        //update score text;
-        string str = string.Format("{0,-10} {1,10}\n", "Name", "Score");
-        for (int i = 0; i < 10 && i < scoreDB.scoreList.Count; i++)
-        {
-            str += string.Format("{0,-10} {1,10}\n", scoreDB.scoreList[i].name, scoreDB.scoreList[i].score);
-        }
-        txt_score.text = str;
+        updateScore();
     }
 
+    //儲存資料到Xml
     void saveScore()
-    {//初始化XML
+    {
         XmlSerializer serializer = new XmlSerializer(typeof(ScoreDatabase));
         FileStream stream = new FileStream(Application.dataPath + "/StreamFiles/XML/Score_data.xml",FileMode.Create);
         serializer.Serialize(stream, scoreDB);
         stream.Close();
-
-
     }
     
+    //讀取Xml資料
     void loadScore()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(ScoreDatabase));
@@ -67,26 +65,103 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         stream.Close();
     }
 
+    //取得DataBase
     public ScoreDatabase getScores()
     {
         loadScore();
         return scoreDB;
     }
 
-    public void addScore(score_tuple one_score)
+    //是否進排行(前五名)
+    public bool isHighScore(int input_score)
     {
-        Debug.Log("Add Score");
-    
-        scoreDB.scoreList.Add(one_score);
-        sort();
-        saveScore();
+        List<score_tuple> scores = new List<score_tuple>();
+        switch (ThrowGameManager.Instance.mode)
+        {
+            case ThrowGameManager.Mode.NORMAL_MODE:
+                scores = scoreDB.normalScoreList;
+                break;
+            case ThrowGameManager.Mode.TIMER_MODE:
+                scores = scoreDB.timerScoreList;
+                break;
+        }
+
+        if(scores.Count<5)
+        {
+                return true;
+        }
+        else
+        {
+            if (input_score > scores[4].score)
+                return true;
+        }
+
+        return false;
     }
 
+    //新增一筆成績紀錄
+    public void addScore(score_tuple one_score,ThrowGameManager.Mode mode)
+    {
+        Debug.Log("Add Score");
+        
+        switch(mode)
+        {
+            case ThrowGameManager.Mode.NORMAL_MODE:
+                    scoreDB.normalScoreList.Add(one_score);
+                break;
+            case ThrowGameManager.Mode.TIMER_MODE:
+                    scoreDB.timerScoreList.Add(one_score);
+                break;
+                
+        }
+        
+        //排序
+        sort();
+        //儲存
+        saveScore();
+        //更新排行榜顯示
+        updateScore();
+    }
+
+    void updateScore()
+    {
+        //update score text;
+        List<score_tuple> scores = new List<score_tuple>();
+        string str_name = string.Format("{0,0}\n", "Name");
+        string str_score = string.Format("{0,0}\n", "Score");
+        switch (ThrowGameManager.Instance.mode)
+        {
+            case ThrowGameManager.Mode.NORMAL_MODE:
+                scores = scoreDB.normalScoreList;
+                break;
+            case ThrowGameManager.Mode.TIMER_MODE:
+                scores = scoreDB.timerScoreList;
+                break;
+
+        }
+        for (int i = 0; i < 10 && i < scores.Count; i++)
+        {
+            str_name += string.Format("{0,0}\n", scores[i].name);
+            str_score += string.Format("{0,0}\n", scores[i].score);
+        }
+        txt_score.text = str_score;
+        txt_name.text = str_name;
+    }
+
+    //排序
     void sort()
     {
-        if (scoreDB.scoreList.Count > 0)
+        if (scoreDB.normalScoreList.Count > 0)
         {
-            scoreDB.scoreList.Sort(delegate (score_tuple a, score_tuple b)
+            scoreDB.normalScoreList.Sort(delegate (score_tuple a, score_tuple b)
+            {
+                return (a.score).CompareTo(a.score);
+            });
+        }
+
+        if (scoreDB.timerScoreList.Count > 0)
+        {
+            scoreDB.timerScoreList.Sort(delegate (score_tuple a, score_tuple b)
             {
                 return (a.score).CompareTo(a.score);
             });

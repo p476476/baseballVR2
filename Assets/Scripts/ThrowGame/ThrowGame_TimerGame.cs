@@ -20,13 +20,21 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     NumberColtroller number_ctlr;
     public GameObject numbers;
     Vector3 shelf_start_pos;//九宮格起始位置
+    int min_num = -5; //最小數字
+    int max_num = 20; //最大數字
 
     //遊戲參數
     int score;
     float left_time;
-    int combo_number; //連擊
     int level; //關卡
     int game_time = 60;//遊戲時間
+
+    //連擊
+    int combo_count;
+    bool isComboing; //正在連擊
+    float init_combo_timer = 0.5f;
+    float combo_timer;
+
 
     //數字版計時器
     //數到0時重新產生新版子
@@ -74,6 +82,8 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         else if (temp_score > score)
             temp_score += (score - temp_score) / 30 - 1;
 
+
+        //遊戲中
         if (ThrowGameManager.Instance.gameState == ThrowGameManager.StateType.PLAYING)
         {
             //更新時間
@@ -85,13 +95,23 @@ public class ThrowGame_TimerGame : MonoBehaviour {
                 {
 					// 計時器數到0 產生Number
                     number_ctlr.destoryNumber(i, 0);
-                    number_ctlr.createNumber(i, Random.Range(0, 20));
+                    number_ctlr.createNumber(i, Random.Range(min_num, max_num));
                     num_timer[i] = 10;
                 }
             }
 
             //更新文字
             update_text();
+
+            //連擊計時
+            if (combo_timer > 0)
+                combo_timer -= Time.deltaTime;
+            else if(isComboing&& combo_count>=2)//產生連擊
+            {
+                message.GetComponent<ThrowGame_Message>().show(combo_count + "連擊!!");
+                combo_count = 1;
+                isComboing = false;
+            }
 
             //當遊戲時間結束
             if (left_time < 0)
@@ -107,7 +127,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     public IEnumerator startGame()
     {
         //初始化參數
-        combo_number = 1;
+        combo_count = 1;
         score = 0;
         temp_score = 0;
         number_ctlr.transform.position = shelf_start_pos;
@@ -149,7 +169,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         //產生數字牌
         for(int i = 1; i < 10; i++)
         {     
-            number_ctlr.createNumber(i, Random.Range(0, 20));
+            number_ctlr.createNumber(i, Random.Range(min_num, max_num));
         }
 
         //更改遊戲狀態為 PLAYING
@@ -159,12 +179,23 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     //打到牌子
     public void hitNumber(number num) 
     {
-        //txt_Debug.text = "got it !" + num;
+        //計算連擊
+        if (!isComboing)
+        {
+            isComboing = true;
+            combo_count = 1;
+            combo_timer = init_combo_timer;
+        }
+        else
+        {
+            combo_count++;
+        }
+
 
         //加分
         scoreStar.Emit(5);
-        score += num.myNum;
-        //combo_number++;
+        score += (int)(num.myNum*(combo_count+1)*0.5);     
+       
 
         //加能量
         energyBar.addEnergy((float)num.myNum);
@@ -191,14 +222,36 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         //關閉能量表
         energyBar.gameObject.SetActive(false);
 
-        //開啟鍵盤
-        MyKeyboard.Instance.enableKeyboard();
+        //分數進排行榜
+        if (ThrowGame_ScoreRecorder.Instance.isHighScore(score))
+        {
+            message.GetComponent<ThrowGame_Message>().show("恭喜上榜");
+            yield return new WaitForSeconds(1.5f);
+            message.GetComponent<ThrowGame_Message>().keepShow("輸入你的名字");
 
-        //等到案ENTER
-        while(!MyKeyboard.Instance.finishInput())
-            yield return new WaitForSeconds(0.5f);
 
-        MyKeyboard.Instance.disableKeyboard();
+            //開啟鍵盤
+            MyKeyboard.Instance.enableKeyboard();
+
+            //等到案ENTER
+            while (!MyKeyboard.Instance.finishInput())
+                yield return new WaitForSeconds(0.5f);
+
+            //關閉鍵盤
+            MyKeyboard.Instance.disableKeyboard();
+
+            //更新到排行榜
+            string name = MyKeyboard.Instance.txt_input.ToString();
+            if (name == "")
+                name = "[    ]";
+
+            score_tuple record = new score_tuple();
+            record.score = this.score;
+            record.name = this.name;
+            record.date = "2016";
+
+            ThrowGame_ScoreRecorder.Instance.addScore(record, ThrowGameManager.Mode.TIMER_MODE);
+        }
 
 
         ThrowGameManager.Instance.backToUnstart();

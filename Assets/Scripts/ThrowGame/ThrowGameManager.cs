@@ -83,7 +83,7 @@ public class ThrowGameManager : MonoBehaviour {
             score.name = "haha";
             score.date = "2016";
 
-            ThrowGame_ScoreRecorder.Instance.addScore(score);
+            ThrowGame_ScoreRecorder.Instance.addScore(score,mode);
           
         }
 
