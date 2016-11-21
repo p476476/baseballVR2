@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ThrowGame_MusicManager : MonoBehaviour {
 	public static ThrowGame_MusicManager Instance;
@@ -7,38 +8,48 @@ public class ThrowGame_MusicManager : MonoBehaviour {
     //music控制
     int current_num; //目前第?首 start at 0
     public int max_num;
-    float volume;
+    float volume = 0.5f;
 
     //Bool
-    bool isPlaying ;
+    bool isPlaying = false;
     bool keepVolumeDown = false;
 
 
 	//audio sources
 	public AudioSource  audio_countdown;
+    public AudioSource audio_gathering;
+    public AudioSource audio_button;
 
-	//background music
-	public new AudioSource audio;
+    //background music
+    public new AudioSource audio;
 	AudioClip[] music; //all music
+    Dictionary<string, AudioClip> music_dictionary = new Dictionary<string, AudioClip>();
 
 	void Awake()
 	{
 		Instance = this;
-	}
+
+        //set music
+        music = Resources.LoadAll<AudioClip>("Music");
+        audio = this.GetComponent<AudioSource>();
+
+        foreach (AudioClip a in music)
+        {
+            print(a.name);
+            music_dictionary.Add(a.name, a);
+        }
+    }
 
     // Use this for initialization
     void Start()
     {
 
-        //set music
-        music = Resources.LoadAll<AudioClip>("Music");
-        audio = this.GetComponent<AudioSource>();
+        print("music manager start");
+
         current_num = 0;
         max_num = music.Length - 1;
-        isPlaying = false;
-        setSong(current_num);
-        audio.Stop();
-        volume = audio.volume;
+        //audio.Stop();
+
 
     }
 
@@ -46,31 +57,51 @@ public class ThrowGame_MusicManager : MonoBehaviour {
 
     void Update()
     {
-
-        //if current music is end play next song
-        if (audio.clip.length - audio.time < 0.5f)
+        //音樂播完時 下一首
+        if (audio.isPlaying&&audio.clip.length - audio.time < 0.5f && ThrowGameManager.Instance.gameState == ThrowGameManager.StateType.UNSTART)
         {
-            playNextSong();
+            playRandomMusic();
         }
+
 
         //音樂暫停時慢慢變小聲
         if (keepVolumeDown)
         {
             audio.volume -= 0.03f;
-            
+
         }
 
     }
 
-    public void playMusic()
+    public void playRandomMusic()
+    {
+        print("playRandomMusic");
+        int index = Random.Range(0, music.Length);
+
+        //不要播到遊戲時的音樂
+        while(music[index].name == "Invisible"|| (music[index].name == "Lagoa_v2"))
+        {
+            index = Random.Range(0, music.Length);
+        }
+
+        StartCoroutine(playMusic(music[index].name));
+    }
+
+    public IEnumerator playMusic(string songName)
     {
         print("play music");
-        if (!audio.isPlaying)
+
+        if (isPlaying)
         {
-            audio.volume = volume;
-            audio.Play();
-            isPlaying = true;
+            StartCoroutine(StopMusic());
+            yield return new WaitForSeconds(1.0f);
         }
+
+        audio.clip = music_dictionary[songName];
+        audio.volume = volume;
+        audio.Play();
+        audio.loop = true;
+        isPlaying = true;
     }
 
     public IEnumerator StopMusic()
@@ -85,49 +116,28 @@ public class ThrowGame_MusicManager : MonoBehaviour {
 
     }
 
-    void setSong(int song_num)
-    {
-        audio.clip = music[current_num];
-        audio.time = 0;
-    }
-
-    public void playNextSong()
-    {
-        print("Now Play Next Song!");
-        audio.Stop();
-        current_num += 1;
-        if (current_num > max_num) current_num = 0;
-        setSong(current_num);
-        audio.Play();
-    }
-
-    public void playPreviousSong()
-    {
-        audio.Stop();
-        current_num -= 1;
-        if (current_num < 0) current_num = max_num;
-        setSong(current_num);
-        audio.Play();
-    }
-
-
-    string getTimeString(float time)
-    {
-        int min, sec;
-        min = (int)(time / 60);
-        sec = (int)(time % 60);
-
-        string str = min.ToString();
-        str += ":";
-        if (sec < 10f) str += "0";
-        str += "" + sec;
-
-        return str;
-    }
 
 	public void playCountDownSound(){
 		audio_countdown.Play ();
 	}
+
+    public void playCheerSound()
+    {
+
+    }
+
+    public void playGatheringSound()
+    {
+        audio_gathering.Play();
+    }
+
+    public void stopGatheringSound()
+    {
+        audio_gathering.Stop();
+    }
+
+
+
 }
 
 

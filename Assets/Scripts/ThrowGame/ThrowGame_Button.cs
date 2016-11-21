@@ -4,7 +4,7 @@ using System.Collections;
 public class ThrowGame_Button : MonoBehaviour {
 
     
-    public string name;
+    public string txt;
 
     //計時被碰到多久
     float timer;
@@ -44,6 +44,7 @@ public class ThrowGame_Button : MonoBehaviour {
 
     }
 
+
     void OnTriggerStay()
     {
         isTouched = true;
@@ -61,10 +62,11 @@ public class ThrowGame_Button : MonoBehaviour {
         
 		if (isenable)
         {
-			isenable = false;
-            print("Button " + name + " is pressed.");
+            GetComponent<AudioSource>().Play();
+            isenable = false;
+            print("Button " + txt + " is pressed.");
 
-            ThrowGameManager.Instance.pressButton(name);
+            ThrowGameManager.Instance.pressButton(txt);
         }
         
     }

@@ -19,7 +19,10 @@ public class Hand : MonoBehaviour {
 	//Rigidbody hand_rb;
 	public Transform hand_center;
 
-	public float hand_power = 1.5f;
+    //
+    float min_power = 1.0f;
+    float max_power = 1.6f;
+    public float hand_power;
 	Vector3 hand_speed;
 	Vector3 old_pos;
 
@@ -79,6 +82,10 @@ public class Hand : MonoBehaviour {
 
         if(anim.GetBool("hold")&&is_holding_thing == true)
         {
+            if(hand_power<max_power)
+                hand_power += Time.deltaTime*0.3f;
+
+
             ctrl.Shock(shock_value);
 
             shock_value += (ushort)(100 * Time.deltaTime);
@@ -121,9 +128,15 @@ public class Hand : MonoBehaviour {
                 //震動初始化
                 shock_value = min_shock_value;
 
+                //初始力道
+                hand_power = min_power;
+
+                //播放音效
+                ThrowGame_MusicManager.Instance.playGatheringSound();
+
                 if (canUseLightingBall)
                 {
-                    holded_obj = (GameObject)Instantiate(light_ball, hand_center.position, Quaternion.identity) as GameObject;
+                    holded_obj = (GameObject)Instantiate(light_ball, hand_center.position, hand_center.rotation) as GameObject;
                     //EventManager.TriggerEvent("consume_energy");
                     canUseLightingBall = false;
                 }
@@ -192,10 +205,14 @@ public class Hand : MonoBehaviour {
     //放開物體
     public void unholdObject()
     {
-        print("unhold");
+        //print("unhold");
         anim.SetBool("hold", false);
         if (is_holding_thing)
         {
+
+            //停止播放音效
+            ThrowGame_MusicManager.Instance.stopGatheringSound();
+
             EventManager.TriggerEvent("stopBiggerBall");
            
             holded_obj.transform.parent = null;

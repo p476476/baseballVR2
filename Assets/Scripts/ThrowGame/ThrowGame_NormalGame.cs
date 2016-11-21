@@ -175,10 +175,7 @@ public class ThrowGame_NormalGame : MonoBehaviour {
                 makeNumsAndGoal(); //產生數字牌和目標
                 break;
             case 4:
-
-                
-
-                gameClear();
+                StartCoroutine(gameClear());
                 break;
         }
     }
@@ -203,8 +200,11 @@ public class ThrowGame_NormalGame : MonoBehaviour {
         //移除障礙
         obstacle.GetComponent<ThrowGame_Obstacle>().disableObstacle();
 
+        
+
+
         message.GetComponent<ThrowGame_Message>().show("GAME OVER");
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(2.0f);
 
         disableAllText();
 
@@ -219,16 +219,50 @@ public class ThrowGame_NormalGame : MonoBehaviour {
 	//遊戲過關
 	IEnumerator gameClear()
     {
-
-		//移除障礙
-		obstacle.GetComponent<ThrowGame_Obstacle>().disableObstacle();
+        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
+        //移除障礙
+        obstacle.GetComponent<ThrowGame_Obstacle>().disableObstacle();
 
         message.GetComponent<ThrowGame_Message>().show("恭喜過關!!");
-		yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f); 
+
+        //分數進排行榜
+        if (ThrowGame_ScoreRecorder.Instance.isHighScore(score))
+        {
+            message.GetComponent<ThrowGame_Message>().show("恭喜上榜");
+            yield return new WaitForSeconds(1.5f);
+            message.GetComponent<ThrowGame_Message>().keepShow("輸入你的名字");
+
+
+            //開啟鍵盤
+            MyKeyboard.Instance.enableKeyboard();
+
+            //等到案ENTER
+            while (!MyKeyboard.Instance.finishInput())
+                yield return new WaitForSeconds(0.5f);
+
+            //關閉鍵盤
+            MyKeyboard.Instance.disableKeyboard();
+
+            //更新到排行榜
+            string player_name = MyKeyboard.Instance.txt_input.text.ToString();
+            if (name == "")
+                name = "[    ]";
+
+            score_tuple record = new score_tuple();
+            record.score = this.score;
+            record.name = player_name;
+            record.date = "2016";
+
+            ThrowGame_ScoreRecorder.Instance.addScore(record, ThrowGameManager.Mode.NORMAL_MODE);
+        }
+
+        
 
         disableAllText();
+        ThrowGameManager.Instance.backToUnstart();
         this.gameObject.SetActive(false);
-        ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
+        
 
     }
     
@@ -247,11 +281,11 @@ public class ThrowGame_NormalGame : MonoBehaviour {
         {
             //播放星星特效
             scoreStar.Emit(5);
-            score += combo_number* combo_number*10;
+            score += combo_number* combo_number*15;
             combo_number ++;
         }
         else {
-            score -= 20;
+            score -= 5;
             combo_number = 1;
         }
 

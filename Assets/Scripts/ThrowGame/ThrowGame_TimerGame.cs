@@ -30,7 +30,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     int game_time = 60;//遊戲時間
 
     //連擊
-    int combo_count;
+    int combo_count=1;
     bool isComboing; //正在連擊
     float init_combo_timer = 0.5f;
     float combo_timer;
@@ -106,12 +106,14 @@ public class ThrowGame_TimerGame : MonoBehaviour {
             //連擊計時
             if (combo_timer > 0)
                 combo_timer -= Time.deltaTime;
-            else if(isComboing&& combo_count>=2)//產生連擊
+            else if(isComboing)//連擊時間結束
             {
-                message.GetComponent<ThrowGame_Message>().show(combo_count + "連擊!!");
+                if(combo_count >= 2)//有達成連擊
+                    message.GetComponent<ThrowGame_Message>().show(combo_count + "連擊!!");
+                isComboing = false; 
                 combo_count = 1;
-                isComboing = false;
             }
+
 
             //當遊戲時間結束
             if (left_time < 0)
@@ -149,8 +151,8 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
 
         //開啟能量表
-        energyBar.gameObject.SetActive(true);
-        energyBar.init();
+        //energyBar.gameObject.SetActive(true);
+       // energyBar.init();
 
         //倒數
         ThrowGame_Message msg = message.GetComponent<ThrowGame_Message>();
@@ -198,7 +200,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
        
 
         //加能量
-        energyBar.addEnergy((float)num.myNum);
+        //energyBar.addEnergy((float)num.myNum);
 
         //1秒後刪除被打中的牌子
         number_ctlr.destoryNumber(num.myPos, 1.0f);
@@ -210,7 +212,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     {
         ThrowGameManager.Instance.gameState = ThrowGameManager.StateType.GAME_END;
         message.GetComponent<ThrowGame_Message>().show("遊戲結束");
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(2.0f);
 
 		number_ctlr.destoryAllNumber(0);
 
@@ -220,7 +222,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         disableAllText ();
 
         //關閉能量表
-        energyBar.gameObject.SetActive(false);
+        //energyBar.gameObject.SetActive(false);
 
         //分數進排行榜
         if (ThrowGame_ScoreRecorder.Instance.isHighScore(score))
@@ -241,13 +243,13 @@ public class ThrowGame_TimerGame : MonoBehaviour {
             MyKeyboard.Instance.disableKeyboard();
 
             //更新到排行榜
-            string name = MyKeyboard.Instance.txt_input.ToString();
+            string player_name = MyKeyboard.Instance.txt_input.text.ToString();
             if (name == "")
                 name = "[    ]";
 
             score_tuple record = new score_tuple();
             record.score = this.score;
-            record.name = this.name;
+            record.name = player_name;
             record.date = "2016";
 
             ThrowGame_ScoreRecorder.Instance.addScore(record, ThrowGameManager.Mode.TIMER_MODE);

@@ -40,6 +40,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
     void Start()
     {
         loadScore();
+        sort();
     }
 
     void Update()
@@ -123,6 +124,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         updateScore();
     }
 
+    //更新排行榜顯示資料
     void updateScore()
     {
         //update score text;
@@ -139,7 +141,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
                 break;
 
         }
-        for (int i = 0; i < 10 && i < scores.Count; i++)
+        for (int i = 0; i < 5 && i < scores.Count; i++)
         {
             str_name += string.Format("{0,0}\n", scores[i].name);
             str_score += string.Format("{0,0}\n", scores[i].score);
@@ -155,7 +157,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         {
             scoreDB.normalScoreList.Sort(delegate (score_tuple a, score_tuple b)
             {
-                return (a.score).CompareTo(a.score);
+                return (b.score).CompareTo(a.score);
             });
         }
 
@@ -163,7 +165,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         {
             scoreDB.timerScoreList.Sort(delegate (score_tuple a, score_tuple b)
             {
-                return (a.score).CompareTo(a.score);
+                return (b.score).CompareTo(a.score);
             });
         }
     }

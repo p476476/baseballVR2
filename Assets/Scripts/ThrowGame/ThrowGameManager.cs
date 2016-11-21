@@ -52,6 +52,7 @@ public class ThrowGameManager : MonoBehaviour {
     {
         mode = Mode.NORMAL_MODE;
         gameState = StateType.UNSTART;
+        music_mgr.playRandomMusic();
     }
 
 	// Update is called once per frame
@@ -97,7 +98,6 @@ public class ThrowGameManager : MonoBehaviour {
             case StateType.START_GAME:
                 disableAllButton();
                 gameState = StateType.READY_TO_PLAY;
-                music_mgr.playMusic();
                 StartCoroutine(startGame());
                 break;
 
@@ -124,6 +124,9 @@ public class ThrowGameManager : MonoBehaviour {
         switch(mode)
         {
             case Mode.NORMAL_MODE:
+                //播放遊戲音樂
+                StartCoroutine(music_mgr.playMusic("Lagoa_v2"));
+
                 //開啟一般賽管理器
                 ThrowGame_NormalGame.Instance.gameObject.SetActive(true);
                 //等1秒確保管理器以開啟
@@ -132,6 +135,9 @@ public class ThrowGameManager : MonoBehaviour {
                 StartCoroutine(ThrowGame_NormalGame.Instance.startGame());
                 break;
             case Mode.TIMER_MODE:
+                //播放遊戲音樂
+                StartCoroutine(music_mgr.playMusic("Invisible"));
+
                 //開啟時間賽管理器
                 ThrowGame_TimerGame.Instance.gameObject.SetActive(true);
                 //等1秒確保管理器以開啟
@@ -144,10 +150,9 @@ public class ThrowGameManager : MonoBehaviour {
 
 	public void backToUnstart()
 	{
-        //if(music_mgr.isPlaying())
-		    StartCoroutine(music_mgr.StopMusic());
+        music_mgr.playRandomMusic();
 
-		enableAllButton();
+        enableAllButton();
 
 		if(mode==Mode.TIMER_MODE)
 			message.keepShow("時間賽");
