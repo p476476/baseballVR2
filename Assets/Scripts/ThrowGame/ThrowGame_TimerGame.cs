@@ -224,12 +224,16 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         //關閉能量表
         //energyBar.gameObject.SetActive(false);
 
+        
+
         //分數進排行榜
         if (ThrowGame_ScoreRecorder.Instance.isHighScore(score))
         {
             message.GetComponent<ThrowGame_Message>().show("恭喜上榜");
             yield return new WaitForSeconds(1.5f);
             message.GetComponent<ThrowGame_Message>().keepShow("輸入你的名字");
+
+           
 
 
             //開啟鍵盤

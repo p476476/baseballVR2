@@ -52,7 +52,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
     void saveScore()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(ScoreDatabase));
-        FileStream stream = new FileStream(Application.dataPath + "/StreamFiles/XML/Score_data.xml",FileMode.Create);
+        FileStream stream = new FileStream(Application.dataPath + "/StreamingAssets/XML/Score_data.xml", FileMode.Create);
         serializer.Serialize(stream, scoreDB);
         stream.Close();
     }
@@ -61,7 +61,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
     void loadScore()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(ScoreDatabase));
-        FileStream stream = new FileStream(Application.dataPath + "/StreamFiles/XML/Score_data.xml", FileMode.Open);
+        FileStream stream = new FileStream(Application.dataPath + "/StreamingAssets/XML/Score_data.xml", FileMode.Open);
         scoreDB = serializer.Deserialize(stream) as ScoreDatabase;
         stream.Close();
     }

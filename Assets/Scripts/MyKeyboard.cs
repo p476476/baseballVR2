@@ -17,6 +17,9 @@ public class MyKeyboard : MonoBehaviour {
     //名字長度限制
     int name_max_length = 9;
 
+    //
+    public Wacki.ViveUILaserPointer laser;
+
     //三排按鍵
     public GameObject[] rows = new GameObject[3];
 
@@ -98,12 +101,17 @@ public class MyKeyboard : MonoBehaviour {
     {
         print("enableKeyboard");
         txt_input.text = "";
+
+      /*  if(laser!=null)
+            laser.enabled = true;*/
         isEnterPressed = false;
         this.GetComponent<RectTransform>().position = new Vector3(0.54f, 0.94f, 1.22f);
     }
 
     public void disableKeyboard()
     {
+       /* if (laser != null)
+            laser.enabled = false;*/
         print("disableKeyboard");
         this.GetComponent<RectTransform>().position = new Vector3(-50.54f, 0.94f, 1.22f);
     }
