@@ -1,40 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bat : MonoBehaviour {
+public class Bat : MonoBehaviour
+{
 
-	// 棒頭
-	public GameObject top;
-	public ControllerBase controller;
+    // 棒頭
+    public GameObject top;
+    public ControllerBase controller;
 
-    private AudioSource AuSo;
+
+    private GameObject admin;
     private Rigidbody rb;
-	private Vector3 lastPos;
-	private Vector3 lastVelocity = new Vector3(0,0,0);
-	private Vector3 lastAcceleration = new Vector3(0,0,0);
+    private Vector3 lastPos;
+    private Vector3 lastVelocity = new Vector3(0, 0, 0);
+    private Vector3 lastAcceleration = new Vector3(0, 0, 0);
 
     private float posz = 0.27f;
-	private Vector3 velocity = new Vector3(0,0,0);
-	private Vector3 acceleration = new Vector3(0,0,0);
+    private Vector3 velocity = new Vector3(0, 0, 0);
+    private Vector3 acceleration = new Vector3(0, 0, 0);
 
-	// 打擊力量
-	private float power = 1.5f ;
+    // 打擊力量
+    private float power = 1.5f;
 
-	void Start () {
-
-		rb = GetComponent<Rigidbody>();
-        AuSo = GetComponent<AudioSource>();
-        lastPos = top.transform.position;
-	}
-  /*  void Update()
+    void Start()
     {
-        if (Input.GetKey("a"))
-            posz += 0.1f;
-        if (Input.GetKey("d"))
-            posz -= 0.1f;
-        gameObject.transform.position = new Vector3(-2.94f, 0.09f, posz);
-    }*/
-    void FixedUpdate() {
+
+        rb = GetComponent<Rigidbody>();
+        admin = GameObject.FindGameObjectWithTag("Admin");
+
+        lastPos = top.transform.position;
+    }
+    /*  void Update()
+      {
+          if (Input.GetKey("a"))
+              posz += 0.1f;
+          if (Input.GetKey("d"))
+              posz -= 0.1f;
+          gameObject.transform.position = new Vector3(-2.94f, 0.09f, posz);
+      }*/
+    void FixedUpdate()
+    {
 
         //for test (suould delete)
         if (Input.GetKey(KeyCode.J))//打擊
@@ -49,29 +54,28 @@ public class Bat : MonoBehaviour {
         if (Input.GetKey(KeyCode.H))//打擊
         {
 
-            this.transform.Rotate(Vector3.down * Time.deltaTime*800);
+            this.transform.Rotate(Vector3.down * Time.deltaTime * 800);
 
         }
-        calculateMovement ();
+        calculateMovement();
 
-	}
+    }
 
-	void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         //Debug.Log ("in "+col.gameObject.GetComponent<Rigidbody> ().velocity);
-        print("OnCollisionEnter");
-        if (collision.gameObject.tag == "Ball") 
+
+        if (collision.gameObject.tag == "Ball")
         {
-            if(collision.gameObject.GetComponent<Ball>().state == Ball.State.Flying1)
-                hitTheBall(collision.gameObject);
-            AuSo.PlayOneShot(Resources.Load<AudioClip>("strike"));
+           // admin.GetComponent<Audio>().Strike();
+            
         }
-       // print(rb.velocity.magnitude);
+        // print(rb.velocity.magnitude);
         //這裡想使用移動幅度(速度) 區分長短打
         /*if(rb.velocity.magnitude > 2)*/
-        
 
-        
+
+
     }
 
     public void hitTheBall(GameObject ball)
@@ -89,36 +93,38 @@ public class Bat : MonoBehaviour {
 
     void OnCollisionStay(Collision collision)
     {
-        
+
     }
 
-	void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         print("OnCollisionExit");
-        
+
 
     }
 
-	// 算棒子v,a
-	void calculateMovement(){
+    // 算棒子v,a
+    void calculateMovement()
+    {
 
-		velocity = top.transform.position - lastPos;
-		lastPos = top.transform.position;
+        velocity = top.transform.position - lastPos;
+        lastPos = top.transform.position;
 
-		acceleration = velocity - lastVelocity;
-		lastVelocity = velocity;
+        acceleration = velocity - lastVelocity;
+        lastVelocity = velocity;
 
-		velocity /= Time.fixedDeltaTime;
-		acceleration /= Time.fixedDeltaTime;
-	}
+        velocity /= Time.fixedDeltaTime;
+        acceleration /= Time.fixedDeltaTime;
+    }
 
-	// 動量守恆算擊出速度
-	Vector3 constantOfMomentum(Rigidbody ballRb){
+    // 動量守恆算擊出速度
+    Vector3 constantOfMomentum(Rigidbody ballRb)
+    {
 
-		Vector3 sumV = ((ballRb.velocity * ballRb.mass) + (velocity * power * rb.mass)) / (ballRb.mass + rb.mass);
-		return sumV;
-	}
+        Vector3 sumV = ((ballRb.velocity * ballRb.mass) + (velocity * power * rb.mass)) / (ballRb.mass + rb.mass);
+        return sumV;
+    }
 
-    
+
 
 }

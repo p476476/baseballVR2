@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pitcher : MonoBehaviour {
+public class Pitcher : MonoBehaviour
+{
 
-	public ControllerBase controller;
+    public ControllerBase controller;
     // 進壘位置
     public GameObject target;
 
     // 投手面對方向
     public GameObject PitcherToward;
-    
+
     // 將投的球
     private GameObject heldBall;
 
@@ -23,7 +24,7 @@ public class Pitcher : MonoBehaviour {
 
     //要投的球的種類
     private Ball.Type balltype;
-    
+
     //動畫
     public Animator anim;
     AnimationState animState;
@@ -36,7 +37,8 @@ public class Pitcher : MonoBehaviour {
     //右手位置
     public Transform trans_righthand;
 
-    void Start () {
+    void Start()
+    {
         this.transform.LookAt(PitcherToward.transform);
         start_pos = new Vector3();
         start_pos = this.transform.position;
@@ -44,10 +46,12 @@ public class Pitcher : MonoBehaviour {
         ControlActtive = false;
     }
 
-	void Update () {
-		if (controller.TouchpadButtonPressed) {
-			moveTarget ();
-		}
+    void Update()
+    {
+        if (controller.TouchpadButtonPressed)
+        {
+            moveTarget();
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             balltype = Ball.Type.Fastball;
@@ -80,37 +84,40 @@ public class Pitcher : MonoBehaviour {
         }
     }
 
-	void moveTarget(){
-		Vector2 padMove = controller.getPadDirection()*0.01f;
-        target.transform.Translate (padMove.x, padMove.y, 0);
-	}
+    void moveTarget()
+    {
+        Vector2 padMove = controller.getPadDirection() * 0.01f;
+        target.transform.Translate(padMove.x, padMove.y, 0);
+    }
 
     public void throwBall()
     {
         anim.SetBool("throw_1", true);
     }
 
-	// 持球 - 產生球物件
-	public void Holding () {
+    // 持球 - 產生球物件
+    public void Holding()
+    {
 
-		heldBall = Instantiate (Resources.Load ("ball"), trans_righthand.position, Quaternion.identity) as GameObject;
-		heldBall.GetComponent<Ball> ().setState (Ball.State.Held);
+        heldBall = Instantiate(Resources.Load("ball"), trans_righthand.position, Quaternion.identity) as GameObject;
+        heldBall.GetComponent<Ball>().setState(Ball.State.Held);
         //heldBall.transform.Translate(,Space.World);
 
-        Pitching ();
-	}
-    
+        Pitching();
+    }
+
     float SpeedMin = 10.0f, SpeedMax = 15.0f, changeMin = 0.3f, changeMax;
     int tmp;
-	// 投球 - 設定球的方向與出力
-	void Pitching () {
-        
+    // 投球 - 設定球的方向與出力
+    void Pitching()
+    {
+
         level = ballnum / 10;
         if (!ControlActtive)
         {
             target.transform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
             //前五個level，每個levle一種球路；其餘球路隨機，5、6 level 球速逐漸增加；7、8變速；
-            if(level < 5)
+            if (level < 5)
             {
                 initialSpeed = Random.Range(SpeedMin, SpeedMax);
                 balltype = (Ball.Type)level;
@@ -140,7 +147,7 @@ public class Pitcher : MonoBehaviour {
                     tmp = Random.Range(0, 10);
                     if (tmp >= 2)
                     {
-                        if(changeSpeed <= 0.8)
+                        if (changeSpeed <= 0.8)
                             changeMin += 0.02f;
                         changeSpeed = Random.Range(changeMin, 1.0f);
                     }
@@ -151,9 +158,9 @@ public class Pitcher : MonoBehaviour {
                 }
             }
         }
-        heldBall.GetComponent<Ball> ().setShot (initialSpeed, balltype, changeSpeed);
-       // heldBall.GetComponent<Ball>().setShot(60, balltype, 3.0f);
-        heldBall.GetComponent<Ball> ().setState (Ball.State.Flying1);
+        heldBall.GetComponent<Ball>().setShot(initialSpeed, balltype, changeSpeed);
+        // heldBall.GetComponent<Ball>().setShot(60, balltype, 3.0f);
+        heldBall.GetComponent<Ball>().setState(Ball.State.Flying1);
         ballnum++;
     }
 
