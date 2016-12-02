@@ -21,13 +21,7 @@ public class Player : MonoBehaviour {
 		if (controller.GripButtonDown) {
 			isHoldingBat = !isHoldingBat;
 		}
-		if (isHoldingBat) {
 
-			bat.transform.SetParent (controller.gameObject.transform);
-		} else {
-
-			bat.transform.SetParent (null);
-		}
 		
 
 
