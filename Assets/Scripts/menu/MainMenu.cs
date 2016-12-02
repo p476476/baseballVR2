@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour {
 
 	// Use this for initialization
@@ -9,7 +9,16 @@ public class MainMenu : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void StrikeMode()
+    {
+        SceneManager.LoadScene("main");
+    }
+    public void throw_mode()
+    {
+        SceneManager.LoadScene("practice");
+    }
+    public void exit()
+    {
+        Application.Quit();    //需確認用法
+    }
 }
