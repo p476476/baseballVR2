@@ -164,6 +164,10 @@ public class Ball : MonoBehaviour
             admin.GetComponent<CalPlayerData>().Strike((int)type);
             admin.GetComponent<CalPlayerData>().lifeUpdate(true);
 
+            /*test*/
+           /* admin.GetComponent<effect>().ShootFireWork();
+            admin.GetComponent<Audio>().Cheers();
+            admin.GetComponent<Audio>().foul_ball();*/
         }
 
         //沒打到球
@@ -189,12 +193,14 @@ public class Ball : MonoBehaviour
         if (col.gameObject.tag == "BoundaryLine" && state == State.Flying2)
         {
             admin.GetComponent<CalPlayerData>().Strike(7);          //界外球+1
+            admin.GetComponent<Audio>().foul_ball();
         }
         if (col.gameObject.tag == "HomeRun" && state == State.Flying2)
         {
             admin.GetComponent<CalPlayerData>().Strike(6);          //全壘打+1
-            //觀眾歡呼聲,煙火秀
-            print("HomeRun!!!");
+            
+            admin.GetComponent<effect>().ShootFireWork();           //發射煙火
+            admin.GetComponent<Audio>().Cheers();                   //觀眾歡呼聲
         }
     }
     //依據球的狀態計算玩家資料 CalPlayerData

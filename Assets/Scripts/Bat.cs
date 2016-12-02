@@ -67,8 +67,8 @@ public class Bat : MonoBehaviour
 
         if (collision.gameObject.tag == "Ball")
         {
-            admin.GetComponent<Audio>().Strike();
-
+           // admin.GetComponent<Audio>().Strike();
+            
         }
         // print(rb.velocity.magnitude);
         //這裡想使用移動幅度(速度) 區分長短打

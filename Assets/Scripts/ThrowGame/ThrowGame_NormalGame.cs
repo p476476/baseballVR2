@@ -236,6 +236,7 @@ public class ThrowGame_NormalGame : MonoBehaviour {
 
             //開啟鍵盤
             MyKeyboard.Instance.enableKeyboard();
+            
 
             //等到案ENTER
             while (!MyKeyboard.Instance.finishInput())
