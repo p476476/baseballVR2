@@ -73,9 +73,11 @@ public class Ball : MonoBehaviour
         //this.GetComponent<Transform>().localScale = new Vector3(10, 10, 10);
         bezier = new Bezier();
 
-
+       
         bat = GameObject.FindGameObjectWithTag("Bat");
         bat_top = bat.transform.GetChild(0).gameObject;
+        
+        
 
         admin = GameObject.FindGameObjectWithTag("Admin");
     }
