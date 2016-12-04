@@ -20,7 +20,7 @@ public class Bat : MonoBehaviour
     private Vector3 acceleration = new Vector3(0, 0, 0);
 
     // 打擊力量
-    private float power = 1.5f;
+    private float power = 2f;
 
     void Start()
     {
@@ -78,6 +78,7 @@ public class Bat : MonoBehaviour
 
     }
 
+    //狀態改變、計算落地點、給予速度
     public void hitTheBall(GameObject ball)
     {
         //controller.Shock ();  //震動

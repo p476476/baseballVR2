@@ -24,7 +24,7 @@ public class Pitcher : MonoBehaviour
 
     //要投的球的種類
     private Ball.Type balltype;
-
+    
     //動畫
     public Animator anim;
     AnimationState animState;
@@ -81,6 +81,10 @@ public class Pitcher : MonoBehaviour
         if (asi.IsName("Throw_1"))
         {
             anim.SetBool("throw_1", false);
+        }
+        else if (asi.IsName("Idle 0"))
+        {
+            Manager.instance.IsbackPos = true;
         }
     }
 

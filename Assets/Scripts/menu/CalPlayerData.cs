@@ -7,6 +7,8 @@ public class CalPlayerData : MonoBehaviour
 {
 
     public GameObject ResultBoard;
+    public GameObject displayLife;
+
     public int score;
     private Rigidbody BoardRigidbody;       //ResultBoard的剛體
     private TextMesh rightColTM;                 //rightCol的TextMesh
@@ -37,7 +39,7 @@ public class CalPlayerData : MonoBehaviour
             
         }
     }*/
-    //連續hit生命++，miss則--，
+    //連續hit生命++，miss則--
     public void lifeUpdate(bool hit)
     {
         if (hit && lastHit && life < 10) life++;
@@ -62,6 +64,7 @@ public class CalPlayerData : MonoBehaviour
                 rightColTM.text += "\n" + rightCol[8].ToString();
             }
         }
+        displayLife.GetComponent<TextMesh>().text = life.ToString();
     }
     public void Strike(int index)
     {
