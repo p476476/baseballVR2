@@ -1,10 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-
-
 
 public class ThrowGameManager : MonoBehaviour {
     public static ThrowGameManager Instance;
@@ -65,8 +61,7 @@ public class ThrowGameManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            mode = Mode.TIMER_MODE;
-            gameState = StateType.START_GAME;
+            StartCoroutine(backToMenu());
 
         }
 
@@ -162,7 +157,18 @@ public class ThrowGameManager : MonoBehaviour {
                 mode = Mode.NORMAL_MODE;
                 btn_TimerMode.setEnable(true);
                 break;
+            case "Home":
+                StartCoroutine(backToMenu());
+                break;
         }
+       
+    }
+
+    IEnumerator backToMenu()
+    {
+        StartCoroutine(music_mgr.StopMusic());
+        yield return  SceneManager.LoadSceneAsync(1);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("menu"));
     }
 
     void disableAllButton()
