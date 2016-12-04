@@ -5,22 +5,19 @@ using System.Collections.Generic;
 public class ThrowGame_MusicManager : MonoBehaviour {
 	public static ThrowGame_MusicManager Instance;
 
-    //music控制
-    int current_num; //目前第?首 start at 0
-    public int max_num;
+    //音量控制
     float volume = 0.5f;
 
     //Bool
     bool isPlaying = false;
-    bool keepVolumeDown = false;
+    bool keepVolumeDown = false;//用於換音樂時 先將前一首歌 音量逐漸縮小
 
-
-	//audio sources
+	//音效
 	public AudioSource  audio_countdown;
     public AudioSource audio_gathering;
     public AudioSource audio_button;
 
-    //background music
+    //背景音樂
     public new AudioSource audio;
 	AudioClip[] music; //all music
     Dictionary<string, AudioClip> music_dictionary = new Dictionary<string, AudioClip>();
@@ -40,20 +37,13 @@ public class ThrowGame_MusicManager : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
+
     void Start()
     {
-
-        print("music manager start");
-
-        current_num = 0;
-        max_num = music.Length - 1;
-        //audio.Stop();
 
 
     }
 
-    // Update is called once per frame
 
     void Update()
     {

@@ -45,9 +45,7 @@ public class ThrowGameManager : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        init();/*
-        ThrowGame_NormalGame.Instance.gameObject.SetActive(false);
-        ThrowGame_TimerGame.Instance.gameObject.SetActive(false);*/
+        init();
     }
 
     void init()
@@ -70,18 +68,6 @@ public class ThrowGameManager : MonoBehaviour {
             mode = Mode.TIMER_MODE;
             gameState = StateType.START_GAME;
 
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            MyKeyboard.Instance.enableKeyboard();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            SceneManager.LoadScene(0);
-          
         }
 
         switch (gameState)
