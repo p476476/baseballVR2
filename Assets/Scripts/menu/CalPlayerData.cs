@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class CalPlayerData : MonoBehaviour
 {
+    public static CalPlayerData Instance; 
 
     public GameObject ResultBoard;
     public GameObject displayLife;
+    public GameObject button;
 
-    public int score;
     private Rigidbody BoardRigidbody;       //ResultBoard的剛體
     private TextMesh rightColTM;                 //rightCol的TextMesh
 
@@ -19,10 +20,13 @@ public class CalPlayerData : MonoBehaviour
     public int life = 10; //玩家生命
     bool lastHit;                           //上一球是否打中
 
+    void Awake()
+    {
+        Instance = this;
+    }
     // Use this for initialization
     void Start()
     {
-        score = 0;
         lastHit = false;
         BoardRigidbody = ResultBoard.GetComponent<Rigidbody>();
 
@@ -30,6 +34,21 @@ public class CalPlayerData : MonoBehaviour
 
         rightCol = new int[9];
         getScore = new int[8] { 200, 300, 400, 500, 600, 200, 3000, 0 };
+    }
+    public void init()
+    {
+        rightCol = new int[9];
+        life = 10;
+        displayLife.GetComponent<TextMesh>().text = life.ToString();        //更新黑板的數字
+
+        //result board
+        ResultBoard.transform.position = new Vector3(-2.2f, 88.6f, 34.7f);
+        ResultBoard.transform.rotation = new Quaternion(0, 0, 0, 0);
+        BoardRigidbody.isKinematic = false;
+        ResultBoard.SetActive(false);
+
+        //right col
+        rightColTM.text = "";
     }
     /*void FixedUpdate()
     {
@@ -62,20 +81,18 @@ public class CalPlayerData : MonoBehaviour
                     rightCol[8] += getScore[i] * rightCol[i];
                 }
                 rightColTM.text += "\n" + rightCol[8].ToString();
+
+                Manager.instance.gamestart = true;          //無法投球
+                button.SetActive(true);
             }
         }
-        displayLife.GetComponent<TextMesh>().text = life.ToString();
+        displayLife.GetComponent<TextMesh>().text = life.ToString();            //更新黑板的數字
     }
     public void Strike(int index)
     {
         rightCol[index]++;
     }
-    public void distanceScore(Transform ball)    //尚未考慮界內界外問題
-    {
-        float dis = Vector3.Distance(ball.position, GameObject.Find("StrikeZone").transform.position);
-        score += (int)dis * 10;
-
-    }
+   
 
 
 }

@@ -170,15 +170,9 @@ public class Pitcher : MonoBehaviour
 
     public void back_to_start_position()
     {
+        Manager.instance.IsbackPos = true;
         this.transform.position = start_pos;
         this.transform.LookAt(PitcherToward.transform);
     }
-
-
-
-
-
-
-
 
 }

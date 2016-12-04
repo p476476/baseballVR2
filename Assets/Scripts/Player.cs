@@ -18,14 +18,15 @@ public class Player : MonoBehaviour {
     }
 
 	void Update () {
-		if (controller.GripButtonDown) {
+		/*if (controller.GripButtonDown) {
 			isHoldingBat = !isHoldingBat;
-		}
-
-		
-
-
-
+		}*/
+        if (controller.isActiveAndEnabled)
+        {
+            bat.transform.SetParent(controller.transform);
+            bat.transform.localPosition = new Vector3(0.02f, -0.01f, -0.067f);
+        }
+            
 	}
 
 }

@@ -4,40 +4,45 @@ using System.Collections;
 
 public class Manager : MonoBehaviour {
 
+    
     public static Manager instance; 
 	public ControllerBase controller;
 
 	private bool isInProgress = false;
     public bool IsbackPos;
+    public bool gamestart;
 	[SerializeField]
 	private UnityEvent getReady;
-
+    void Awake()
+    {
+        instance = this;
+    }
 
 	void Start () {
-        instance = this;
+        
         IsbackPos = true;
+        gamestart = false;
     }
 
 	void Update () {
-	
-		if (Input.GetKeyDown (KeyCode.Z) && IsbackPos) {
-			getReady.Invoke ();
-            IsbackPos = false;
-		}
+
+        if (gamestart)
+        {
+            if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
+            {
+                getReady.Invoke();
+                IsbackPos = false;
+            }
 
 
-		if (controller.TriggerButtonDown && IsbackPos) {
-			getReady.Invoke ();
-            IsbackPos = false;
+            if (controller.TriggerButtonDown && IsbackPos)
+            {
+                getReady.Invoke();
+                IsbackPos = false;
+            }
         }
-		if (controller.testbuttonDown) {
-			getReady.Invoke ();
-		}
-
-
-
-
-
+		
+		
 
 
 	}

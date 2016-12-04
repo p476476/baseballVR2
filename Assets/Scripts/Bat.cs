@@ -67,7 +67,7 @@ public class Bat : MonoBehaviour
 
         if (collision.gameObject.tag == "Ball")
         {
-           // admin.GetComponent<Audio>().Strike();
+           admin.GetComponent<Audio>().Strike();
             
         }
         // print(rb.velocity.magnitude);
@@ -81,7 +81,8 @@ public class Bat : MonoBehaviour
     //狀態改變、計算落地點、給予速度
     public void hitTheBall(GameObject ball)
     {
-        //controller.Shock ();  //震動
+        if(controller.isActiveAndEnabled)
+            controller.Shock (500);  //震動
         ball.GetComponent<Ball>().setState(Ball.State.Hit);
         Rigidbody ballRb = ball.GetComponent<Rigidbody>();
         Vector3 v = constantOfMomentum(ballRb);

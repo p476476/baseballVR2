@@ -19,6 +19,7 @@ public class ThrowGame_Button : MonoBehaviour {
     public ParticleSystem cycle_paritcle;
     Color cycle_color;
 
+   // public Material a;   //for test        
     //=====================System Function========================//
     void Start()
     {
@@ -34,6 +35,7 @@ public class ThrowGame_Button : MonoBehaviour {
         //觸碰時光環會變色
         cycle_color.r = Mathf.Lerp(0, 1, timer / active_time);
         cycle_color.b = Mathf.Lerp(0, 1, 1 - timer / active_time);
+       
         cycle_paritcle.gameObject.GetComponent<ParticleSystemRenderer>().material.SetColor("_TintColor", cycle_color);
 
         //計算被碰到多久
