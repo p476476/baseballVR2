@@ -55,7 +55,7 @@ public class ThrowGameManager : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            mode = Mode.NORMAL_MODE;
+            mode = Mode.TIMER_MODE;
             gameState = StateType.START_GAME;
         }
 
@@ -73,6 +73,7 @@ public class ThrowGameManager : MonoBehaviour {
 
             //按下開始遊戲的瞬間
             case StateType.START_GAME:
+                EventManager.TriggerEvent("StartGame");
                 disableAllButton();
                 gameState = StateType.READY_TO_PLAY;
                 StartCoroutine(startGame());
@@ -89,8 +90,8 @@ public class ThrowGameManager : MonoBehaviour {
                 break;
 
 			case StateType.GAME_END:
-			
-	            break;
+                
+                break;
         }
 
         
@@ -127,6 +128,7 @@ public class ThrowGameManager : MonoBehaviour {
 
 	public void backToUnstart()
 	{
+        EventManager.TriggerEvent("EndGame");
         music_mgr.playRandomMusic();
 
         enableAllButton();
@@ -166,6 +168,7 @@ public class ThrowGameManager : MonoBehaviour {
 
     IEnumerator backToMenu()
     {
+        
         StartCoroutine(music_mgr.StopMusic());
         yield return  SceneManager.LoadSceneAsync(1);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("menu"));

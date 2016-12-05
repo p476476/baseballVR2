@@ -27,7 +27,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
     int score;
     float left_time;
     int level; //關卡
-    int game_time = 60;//遊戲時間
+    int game_time = 10;//遊戲時間
 
     //連擊
     int combo_count=1;

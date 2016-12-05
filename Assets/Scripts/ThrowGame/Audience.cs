@@ -7,20 +7,38 @@ public class Audience : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(random_anim());
+        GetComponent<Animator>().Play("Idle 0", -1, Random.Range(0f, 1f));
+
     }
 
-    IEnumerator random_anim()
-    {
-        GetComponent<Animator>().speed = Random.Range(0, 2000);
 
-        yield return new WaitForSeconds(0.1f);
-
-        GetComponent<Animator>().speed = 1;
-    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    //===============Unity Event===============//
+    void OnEnable()
+    {
+        EventManager.StartListening("StartGame", celebrating);
+        EventManager.StartListening("EndGame", idling);
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("StartGame", celebrating);
+        EventManager.StopListening("EndGame", idling);
+    }
+
+    void celebrating()
+    {
+        GetComponent<Animator>().SetTrigger("toCelebrate");
+        //StartCoroutine(random_anim());
+    }
+
+    void idling()
+    {
+        GetComponent<Animator>().Play("Idle 0", -1, Random.Range(0f, 1f));
+    }
 }
