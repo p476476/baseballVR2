@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour {
 
@@ -22,35 +23,49 @@ public class Manager : MonoBehaviour {
         
         IsbackPos = true;
         gamestart = false;
+        StartCoroutine(loadScenes());
     }
 
-	void Update () {
+    //載入其他場景(回menu時會用到)
+    IEnumerator loadScenes()
+    {
+        yield return SceneManager.CreateScene("practice");
+
+        yield return SceneManager.CreateScene("menu");
+    }
+
+    void Update () {
 
         if (gamestart)
         {
             if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
             {
                 getReady.Invoke();
-                IsbackPos = false;
+                
             }
-
+            
 
             if (controller.TriggerButtonDown && IsbackPos)
             {
                 getReady.Invoke();
-                IsbackPos = false;
+                
             }
         }
 		
-		
+	}
 
+    
+	public void GameStart(){
+        StartCoroutine(WaitTime(1));
 
 	}
 
-	void GameStart (){
+    IEnumerator WaitTime(float _Time)
+    {
+        yield return new WaitForSeconds(_Time);
+        gamestart = true;
+    }
 
-
-	}
 	void GameStop (){
 
 

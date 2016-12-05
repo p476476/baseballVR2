@@ -42,6 +42,14 @@ public class ThrowGameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         init();
+        StartCoroutine(loadScenes());
+    }
+
+    IEnumerator loadScenes()
+    {
+        yield return SceneManager.CreateScene("main");
+
+        yield return SceneManager.CreateScene("menu");
     }
 
     void init()
@@ -61,7 +69,7 @@ public class ThrowGameManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            StartCoroutine(backToMenu());
+            //StartCoroutine(backToMenu());
 
         }
 
@@ -158,17 +166,19 @@ public class ThrowGameManager : MonoBehaviour {
                 btn_TimerMode.setEnable(true);
                 break;
             case "Home":
-                StartCoroutine(backToMenu());
+                //StartCoroutine(backToMenu());
+                backToMenu();
                 break;
         }
        
     }
 
-    IEnumerator backToMenu()
+    void backToMenu()
     {
-        StartCoroutine(music_mgr.StopMusic());
-        yield return  SceneManager.LoadSceneAsync(1);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("menu"));
+
+
+        SceneManager.LoadScene("menu");
+        SteamVR_Fade.View(Color.white, 3.0f);
     }
 
     void disableAllButton()

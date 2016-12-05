@@ -81,6 +81,7 @@ public class Pitcher : MonoBehaviour
         if (asi.IsName("Throw_1"))
         {
             anim.SetBool("throw_1", false);
+            Manager.instance.IsbackPos = false;
         }
         else if (asi.IsName("Idle 0"))
         {
@@ -170,7 +171,6 @@ public class Pitcher : MonoBehaviour
 
     public void back_to_start_position()
     {
-        Manager.instance.IsbackPos = true;
         this.transform.position = start_pos;
         this.transform.LookAt(PitcherToward.transform);
     }
