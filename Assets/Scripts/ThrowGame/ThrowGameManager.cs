@@ -177,10 +177,7 @@ public class ThrowGameManager : MonoBehaviour {
 
     void backToMenu()
     {
-
-
         SceneManager.LoadScene("menu");
-        SteamVR_Fade.View(Color.white, 3.0f);
     }
 
     void disableAllButton()
