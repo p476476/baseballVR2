@@ -8,6 +8,7 @@ public class Manager : MonoBehaviour {
     
     public static Manager instance; 
 	public ControllerBase controller;
+    public GameObject button;
 
 	private bool isInProgress = false;
     public bool IsbackPos;
@@ -43,6 +44,11 @@ public class Manager : MonoBehaviour {
                 getReady.Invoke();
 
             }
+        }
+        if(controller.TouchpadButtonDown)
+        {
+            instance.gamestart = false;          //無法投球
+            button.SetActive(true);
         }
         if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
         {
