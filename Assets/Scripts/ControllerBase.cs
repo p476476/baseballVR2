@@ -12,6 +12,7 @@ public class ControllerBase : MonoBehaviour {
 	private Valve.VR.EVRButtonId MenuButton = Valve.VR.EVRButtonId.k_EButton_ApplicationMenu;
 	private Valve.VR.EVRButtonId testbutton = Valve.VR.EVRButtonId.k_EButton_System;
 
+
 	//壓下的瞬間、彈起的瞬間、持續壓住
 	public bool TriggerButtonDown = false;
 	public bool TriggerButtonUp = false;

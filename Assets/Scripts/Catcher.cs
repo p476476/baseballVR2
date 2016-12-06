@@ -14,14 +14,8 @@ public class Catcher : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Ball") 
 		{
-			if (collision.gameObject.GetComponent<Ball> ().state == Ball.State.Flying1)
-				catchBall (collision.gameObject.GetComponent<Ball> ());
+            if (collision.gameObject.GetComponent<Ball>().state == Ball.State.Flying1)
+                Destroy(collision.gameObject);
 		}
-
-	}
-
-	void catchBall(Ball ball){
-		ball.state = Ball.State.Nohit;
-	
 	}
 }
