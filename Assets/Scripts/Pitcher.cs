@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pitcher : MonoBehaviour
 {
-
+    public static Pitcher Instance;
     public ControllerBase controller;
     // 進壘位置
     public GameObject target;
@@ -15,7 +15,7 @@ public class Pitcher : MonoBehaviour
     private GameObject heldBall;
 
     //球數與關卡
-    private int ballnum;
+    public int ballnum;
     private int level;
 
     // 球初速與變速比例
@@ -36,7 +36,10 @@ public class Pitcher : MonoBehaviour
     public Vector3 start_pos;
     //右手位置
     public Transform trans_righthand;
-
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         this.transform.LookAt(PitcherToward.transform);
@@ -99,7 +102,10 @@ public class Pitcher : MonoBehaviour
     {
         anim.SetBool("throw_1", true);
     }
-
+    public void SetIdleAnim()
+    {
+        anim.SetBool("Idle 0", true);
+    }
     // 持球 - 產生球物件
     public void Holding()
     {
@@ -117,7 +123,7 @@ public class Pitcher : MonoBehaviour
     void Pitching()
     {
 
-        level = ballnum / 10;
+        level = ballnum / 5;
         if (!ControlActtive)
         {
             target.transform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);

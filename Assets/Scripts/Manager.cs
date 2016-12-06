@@ -38,21 +38,18 @@ public class Manager : MonoBehaviour {
 
         if (gamestart)
         {
-            if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
-            {
-                getReady.Invoke();
-                
-            }
-            
-
             if (controller.TriggerButtonDown && IsbackPos)
             {
                 getReady.Invoke();
-                
+
             }
         }
-		
-	}
+        if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
+        {
+            getReady.Invoke();
+
+        }
+    }
 
     
 	public void GameStart(){

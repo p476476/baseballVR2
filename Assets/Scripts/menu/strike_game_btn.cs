@@ -26,6 +26,7 @@ public class strike_game_btn : MonoBehaviour {
             if(txt == "start")
             {
                 CalPlayerData.Instance.init();                     //初始化玩家資料
+                Pitcher.Instance.ballnum = 0;                       // 球數初始化
                 Manager.instance.GameStart();                      //可以投球
                 gameObject.transform.parent.gameObject.SetActive(false);                //將button關掉
             }

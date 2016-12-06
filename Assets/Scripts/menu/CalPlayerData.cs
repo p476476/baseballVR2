@@ -82,6 +82,7 @@ public class CalPlayerData : MonoBehaviour
                 }
                 rightColTM.text += "\n" + rightCol[8].ToString();
 
+                Pitcher.Instance.SetIdleAnim();
                 Manager.instance.gamestart = false;          //無法投球
                 button.SetActive(true);
             }
