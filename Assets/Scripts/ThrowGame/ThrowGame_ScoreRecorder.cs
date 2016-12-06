@@ -31,6 +31,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
     public ScoreDatabase scoreDB;
     public TextMesh txt_score;
     public TextMesh txt_name;
+    bool isChanged;
 
     void Awake()
     {
@@ -41,11 +42,16 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
     {
         loadScore();
         sort();
+        isChanged = true;
     }
 
     void Update()
     {
-        updateScore();
+        if (isChanged)
+        {
+            updateScore();
+            isChanged = false;
+        }
     }
 
     //儲存資料到Xml
@@ -121,7 +127,7 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         //儲存
         saveScore();
         //更新排行榜顯示
-        updateScore();
+        isChanged = true;
     }
 
     //更新排行榜顯示資料
