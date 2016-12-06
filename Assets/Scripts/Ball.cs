@@ -290,7 +290,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-   /* void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         if (state == State.Flying1)
         {
@@ -302,7 +302,7 @@ public class Ball : MonoBehaviour
             }
         }
 
-        if (state == State.Flying2)
+       /* if (state == State.Flying2)
         {
 
             //畫出落地點
@@ -311,9 +311,9 @@ public class Ball : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(hit_position, 0.3f);
+        Gizmos.DrawSphere(hit_position, 0.3f);*/
     }
-    */
+    
     public void setState(State state)
     {
         this.state = state;
