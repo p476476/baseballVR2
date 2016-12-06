@@ -23,12 +23,10 @@ public class strike_game_btn : MonoBehaviour {
         if (col.gameObject.tag == "Bat" && ctrl.TriggerButtonDown)
         {
             //for test
-            print("test");
             if(txt == "start")
             {
-                CalPlayerData.Instance.init();                          //初始化玩家資料
+                CalPlayerData.Instance.init();                     //初始化玩家資料
                 Manager.instance.GameStart();                      //可以投球
-                txt = " Close ";
                 gameObject.transform.parent.gameObject.SetActive(false);                //將button關掉
             }
             else if(txt == "home")
