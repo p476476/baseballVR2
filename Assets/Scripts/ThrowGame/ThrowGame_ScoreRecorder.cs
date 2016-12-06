@@ -149,7 +149,12 @@ public class ThrowGame_ScoreRecorder : MonoBehaviour {
         }
         for (int i = 0; i < 5 && i < scores.Count; i++)
         {
-            str_name += string.Format("{0,0}\n", scores[i].name);
+            string player_name = scores[i].name;
+            if(player_name.Length>9)
+            {
+                player_name = player_name.Substring(0, 9)+"...";
+            }
+            str_name += string.Format("{0,0}\n", player_name);
             str_score += string.Format("{0,0}\n", scores[i].score);
         }
         txt_score.text = str_score;

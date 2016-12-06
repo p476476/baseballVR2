@@ -184,10 +184,10 @@ public class ThrowGame_NormalGame : MonoBehaviour {
 	public void ballDropOnGround()
 	{
 		count_ball_can_drop--;
-
-		print (count_ball_can_drop + " " + numList.Count);
+        update_text();
+        //print (count_ball_can_drop + " " + numList.Count);
 		//還有數字沒打完
-		if (count_ball_can_drop<=0 && numList.Count!=0) {
+		if (count_ball_can_drop<=0 && numList.Count!=0 && left_ball<=0) {
 			StartCoroutine(gameOver());
 		}
 	}

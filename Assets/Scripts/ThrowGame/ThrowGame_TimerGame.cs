@@ -147,8 +147,8 @@ public class ThrowGame_TimerGame : MonoBehaviour {
         enableAllText();
         update_text();
 
-        //分數為白色(因為倒數時會變紅 怕沒改回來)
-        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        //分數為blue(因為倒數時會變紅 怕沒改回來)
+        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
 
         //開啟能量表
         //energyBar.gameObject.SetActive(true);
@@ -217,7 +217,7 @@ public class ThrowGame_TimerGame : MonoBehaviour {
 		number_ctlr.destoryAllNumber(0);
 
         //倒數文字變回白色
-        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        txt_leftTime.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
 
         disableAllText ();
 

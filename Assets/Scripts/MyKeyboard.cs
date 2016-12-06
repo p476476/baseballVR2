@@ -15,7 +15,7 @@ public class MyKeyboard : MonoBehaviour {
     public bool isEnterPressed = false;
 
     //名字長度限制
-    int name_max_length = 9;
+    int name_max_length = 15;
 
     //
     public Wacki.ViveUILaserPointer laser;

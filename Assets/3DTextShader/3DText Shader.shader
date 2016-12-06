@@ -1,7 +1,7 @@
 ﻿Shader "Custom/3D Text Shader" {
 	Properties{
 		_MainTex("Font Texture", 2D) = "white" {}
-	_Color("Text Color", Color) = (1,1,1,1)
+	_Color("Text Color", Color) = (0.8,0.8,1,1)
 	}
 
 

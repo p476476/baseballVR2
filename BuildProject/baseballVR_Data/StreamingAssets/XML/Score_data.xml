@@ -2,29 +2,29 @@
 <ScoreDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TimerGameScore>
     <score_tuple>
-      <name>Unity</name>
+      <name>FGH</name>
       <date>2016</date>
-      <score>421</score>
+      <score>275</score>
     </score_tuple>
     <score_tuple>
-      <name>SORRY</name>
+      <name>ONICHICHI</name>
       <date>2016</date>
-      <score>381</score>
+      <score>218</score>
     </score_tuple>
     <score_tuple>
-      <name>GOGO</name>
+      <name>TTT</name>
       <date>2016</date>
-      <score>369</score>
-    </score_tuple>
-    <score_tuple>
-      <name>EZ</name>
-      <date>2016</date>
-      <score>180</score>
+      <score>197</score>
     </score_tuple>
     <score_tuple>
       <name>DD</name>
       <date>2016</date>
       <score>174</score>
+    </score_tuple>
+    <score_tuple>
+      <name>TTTTTTTTTTTTTTT</name>
+      <date>2016</date>
+      <score>90</score>
     </score_tuple>
   </TimerGameScore>
   <NormalGameScore>
@@ -34,9 +34,9 @@
       <score>250</score>
     </score_tuple>
     <score_tuple>
-      <name>WWWWW</name>
+      <name>TTTT</name>
       <date>2016</date>
-      <score>165</score>
+      <score>210</score>
     </score_tuple>
   </NormalGameScore>
 </ScoreDatabase>

@@ -47,13 +47,12 @@ public class Manager : MonoBehaviour {
         }
         if(controller.TouchpadButtonDown)
         {
-            instance.gamestart = false;          //無法投球
+            gamestart = false;          //無法投球
             button.SetActive(true);
         }
         if (Input.GetKeyDown(KeyCode.Z) && IsbackPos)
         {
             getReady.Invoke();
-
         }
     }
 
