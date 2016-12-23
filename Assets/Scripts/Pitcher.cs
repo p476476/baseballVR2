@@ -123,7 +123,7 @@ public class Pitcher : MonoBehaviour
     void Pitching()
     {
 
-        level = ballnum / 5;
+        level = ballnum / 3;
         if (!ControlActtive)
         {
             target.transform.localPosition = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
