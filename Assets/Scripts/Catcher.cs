@@ -18,7 +18,7 @@ public class Catcher : MonoBehaviour {
             if (collision.gameObject.GetComponent<Ball>().state == Ball.State.Flying1)
             {
                 admin.GetComponent<CalPlayerData>().lifeUpdate(false);
-                Destroy(collision.gameObject);
+              
             }
                 
 		}

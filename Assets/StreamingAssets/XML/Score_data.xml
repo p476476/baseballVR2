@@ -2,6 +2,11 @@
 <ScoreDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TimerGameScore>
     <score_tuple>
+      <name>LAYAN</name>
+      <date>2016</date>
+      <score>400</score>
+    </score_tuple>
+    <score_tuple>
       <name>FGH</name>
       <date>2016</date>
       <score>275</score>
@@ -12,14 +17,44 @@
       <score>218</score>
     </score_tuple>
     <score_tuple>
+      <name>STEVEN</name>
+      <date>2016</date>
+      <score>197</score>
+    </score_tuple>
+    <score_tuple>
+      <name>TIZAN</name>
+      <date>2016</date>
+      <score>196</score>
+    </score_tuple>
+    <score_tuple>
       <name>DD</name>
       <date>2016</date>
       <score>174</score>
     </score_tuple>
     <score_tuple>
+      <name>SIAN</name>
+      <date>2016</date>
+      <score>164</score>
+    </score_tuple>
+    <score_tuple>
+      <name>HSU</name>
+      <date>2016</date>
+      <score>152</score>
+    </score_tuple>
+    <score_tuple>
+      <name>RAINBOW</name>
+      <date>2016</date>
+      <score>136</score>
+    </score_tuple>
+    <score_tuple>
       <name>TTTTTTTTTTTTTTT</name>
       <date>2016</date>
       <score>90</score>
+    </score_tuple>
+    <score_tuple>
+      <name>CHIU</name>
+      <date>2016</date>
+      <score>25</score>
     </score_tuple>
   </TimerGameScore>
   <NormalGameScore>

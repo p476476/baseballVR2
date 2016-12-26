@@ -20,7 +20,7 @@ public class Bat : MonoBehaviour
     private Vector3 acceleration = new Vector3(0, 0, 0);
 
     // 打擊力量
-    private float power = 2f;
+    private float power = 1.7f;
 
     void Start()
     {

@@ -12,14 +12,14 @@
       <score>218</score>
     </score_tuple>
     <score_tuple>
-      <name>TTT</name>
-      <date>2016</date>
-      <score>197</score>
-    </score_tuple>
-    <score_tuple>
       <name>DD</name>
       <date>2016</date>
       <score>174</score>
+    </score_tuple>
+    <score_tuple>
+      <name>PIKACHU</name>
+      <date>2016</date>
+      <score>108</score>
     </score_tuple>
     <score_tuple>
       <name>TTTTTTTTTTTTTTT</name>
@@ -32,11 +32,6 @@
       <name>GOGO</name>
       <date>2016</date>
       <score>250</score>
-    </score_tuple>
-    <score_tuple>
-      <name>TTTT</name>
-      <date>2016</date>
-      <score>210</score>
     </score_tuple>
   </NormalGameScore>
 </ScoreDatabase>
